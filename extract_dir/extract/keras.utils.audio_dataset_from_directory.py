@@ -1,0 +1,15 @@
+@keras_export("keras.utils.audio_dataset_from_directory", v1=[])
+def audio_dataset_from_directory(
+    directory,
+    labels="inferred",
+    label_mode="int",
+    class_names=None,
+    batch_size=32,
+    sampling_rate=None,
+    output_sequence_length=None,
+    ragged=False,
+    shuffle=True,
+    seed=None,
+    validation_split=None,
+    subset=None,
+    follow_links=False,

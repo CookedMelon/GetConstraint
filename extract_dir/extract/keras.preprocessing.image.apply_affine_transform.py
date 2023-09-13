@@ -1,0 +1,15 @@
+@keras_export("keras.preprocessing.image.apply_affine_transform")
+def apply_affine_transform(
+    x,
+    theta=0,
+    tx=0,
+    ty=0,
+    shear=0,
+    zx=1,
+    zy=1,
+    row_axis=1,
+    col_axis=2,
+    channel_axis=0,
+    fill_mode="nearest",
+    cval=0.0,
+    order=1,

@@ -1,0 +1,30 @@
+"/home/cc/Workspace/tfconstraint/keras/applications/efficientnet.py"
+@keras_export(
+    "keras.applications.efficientnet.EfficientNetB6",
+    "keras.applications.EfficientNetB6",
+)
+def EfficientNetB6(
+    include_top=True,
+    weights="imagenet",
+    input_tensor=None,
+    input_shape=None,
+    pooling=None,
+    classes=1000,
+    classifier_activation="softmax",
+    **kwargs,
+):
+    return EfficientNet(
+        1.8,
+        2.6,
+        528,
+        0.5,
+        model_name="efficientnetb6",
+        include_top=include_top,
+        weights=weights,
+        input_tensor=input_tensor,
+        input_shape=input_shape,
+        pooling=pooling,
+        classes=classes,
+        classifier_activation=classifier_activation,
+        **kwargs,
+    )
