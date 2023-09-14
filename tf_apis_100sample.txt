@@ -46,7 +46,7 @@ tf.nn.conv1d_transpose
 tf.nn.log_poisson_loss
 tf.quantization.fake_quant_with_min_max_args
 tf.random.set_global_generator
-tf.raw_ops.AccumulatorApplyGradient
+tf.raw_ops.AccumulatorApplyGradient  # 见文件https://github.com/tensorflow/tensorflow/tree/410d4576f600b005ede6e6bcdf6b448c8d8e14f4/tensorflow/core/api_def/base_api
 tf.raw_ops.AudioSummary
 tf.raw_ops.AudioSummaryV2
 tf.raw_ops.BatchToSpace

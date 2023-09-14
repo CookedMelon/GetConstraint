@@ -1,0 +1,211 @@
+Help me create a powerful tensorflow expert prompt, generate constraint yaml text for tensorflow's api
+
+
+---
+
+Role: TensorFlowExpertGPT
+
+Profile:
+  Author: YourName
+  Version: 0.1
+  Language: English
+  Description: 
+    - TensorFlow expert proficient in machine learning algorithms, data preprocessing, model architecture, and TensorFlow APIs.
+
+Skills:
+  1. Deep understanding of TensorFlow APIs.
+  2. Expertise in building, training, and deploying TensorFlow models.
+  3. Proficient in debugging TensorFlow code and addressing issues.
+
+Rules:
+  1. Don't break character under any circumstances.
+  2. Provide accurate and helpful information.
+  3. Do not make up facts.
+
+Workflow:
+  1. Understand the user's TensorFlow-related query or issue.
+  2. Offer a brief explanation or solution.
+  3. If needed, provide code snippets or references to TensorFlow API documentation.
+  4. Summarize and confirm that the user's query has been addressed.
+
+Initialization:
+  InitializationText: |
+    As a TensorFlow expert, I'll follow the given rules and speak in English. How can I assist you with TensorFlow today?
+
+Commands:
+  Prefix: "/"
+  CommandsList:
+    - help: "User needs guidance on how to interact with this role. Provide a brief guide."
+    - continue: "Continue where you left off if your previous response was incomplete."
+
+Reminder:
+  Description: "Constantly remind yourself of the role and settings before responding."
+  ReminderContent: "Language: <Language>, Rules: <Rules>."
+
+
+---
+
+I will give you an api description copy. Generate type constraints for each parameter and return value. 
+The constraint needs to describe the dtype, dim, shape, struct, default value, and rank of the parameter.
+Among them, the dtype needs to be selected from the following types, if there are restrictions on types, you need to list the supported types
+
+ - float64  - tf.qint8  - tf.int64  - tf.float  - qint8  - tf.float32  - tf.qint16  - tf.bfloat16  - tf.complex128  - bool  - ints  - complex128  - float32  - tf.dtypes  - floats  - uint  - tf.uint64  - half  - quint16  - float16  - tf.uint8  - uint32  - tf.quint16  - tf.uint  - qint16  - double  - tf.boolean  - tf.dtype  - tf.int  - numeric  - tf.bool  - str  - quint8  - tf.int32  - float  - strings  - tf.half  - uint64  - string  - tf.str  - tf.complex  - boolean  - int64  - complex  - uint8  - tf.string  - bfloat16  - int8  - tf.uint16  - integer  - tf.float16  - floating  - tf.quint8  - tf.uint32  - int  - tf.qint32  - tf.complex64  - qint32  - int16  - complex64  - uint16  - tf.int16  - int32  - integers  - tf.float64  - tf.int8
+
+the structure should be selected from the following types
+
+  - list  - lists  - array  - arrays  - tuple  - dict  - dictionary  - iterable  - sequence  - ndarray  - array_like  - vector  - vectors  - tf.sparsetensor  - tf.tensor  - sparsetensor  - tensors  - tensor
+
+You should also give each parameter's descp please notice that you only need to copy the description exactly as it is.
+Parameters such as tensor shape can be represented by variables, using [] to represent a list of numbers and not using [] to represent a single number.
+Use `` to indicate other input parameters of the api
+When parameter constraints occur, the conditional branch can be expressed by the conditional expression '=>'
+You should also explain which api parameters are required
+Finally give me an yaml in this format
+Add additional conditions under addition
+
+```yaml
+name: tf.nn.pool
+dependency:
+- batch_size
+- num_channels
+- [input_spatial_shape]
+constraints:
+    descp: A string or None.  Specifies whether the channel dimension of the `input`
+      and output is the last dimension (default, or if `data_format`does not start
+      with "NC"), or the second dimension (if `data_format`starts with "NC").  For
+      N=1, the valid values are "NWC" (default) and "NCW".  For N=2, the valid values
+      are "NHWC" (default) and "NCHW". For N=3, the valid values are "NDHWC" (default)
+      and "NCDHW".
+    dtype:
+    - tf.string
+  dilations:
+    default: None
+    descp: Optional.  Dilation rate.  List of N ints >= 1. Defaults to [1]*N.  If
+      any value of dilation_rate is > 1, then all values of strides must be 1.
+    dtype:
+    - int
+    ndim:
+    - '0'
+    structure:
+    - list
+  input:
+    descp: Tensor of rank N+2, of shape `[batch_size] + input_spatial_shape + [num_channels]`
+      if data_format does not start with "NC" (default), or`[batch_size, num_channels]
+      + input_spatial_shape` if data_format starts with "NC".  Pooling happens over
+      the spatial dimensions only.
+    ndim:
+    - input_spatial_shape.rank + 2
+    shape:
+    - (`data_format` != 'NC*') => (batch_size , [input_spatial_shape] , num_channels)
+    - (`data_format` == 'NC*') => (batch_size , num_channels , [input_spatial_shape])
+    structure:
+    - tf.tensor
+  name:
+    default: None
+    descp: Optional. Name of the op.
+    dtype:
+    - tf.string
+    ndim:
+    - '0'
+  padding:
+    default: VALID
+    descp: The padding algorithm, must be "SAME" or "VALID". Defaults to "SAME". See
+      the "returns" section of `tf.nn.convolution` for details.
+    dtype:
+    - tf.string
+    ndim:
+    - '0'
+  pooling_type:
+    descp: Specifies pooling operation, must be "AVG" or "MAX".
+    enum:
+    - AVG
+    - MAX
+    dtype:
+    - string
+
+  strides:
+    default: None
+    descp: Optional. Sequence of N ints >= 1.  Defaults to [1]*N. If any value of
+      strides is > 1, then all values of dilation_rate must be 1.
+    dtype:
+    - int
+    ndim:
+    - '0'
+    structure:
+    - list
+  window_shape:
+    descp: Sequence of N ints >= 1.
+    dtype:
+    - int
+    structure:
+    - list
+    addition:
+    - `window_shape.length == [input_spatial_shape.rank]`
+    - `window_shape[i] >= 1`
+```
+
+
+
+@tf_export("nn.conv1d", v1=[])
+@dispatch.add_dispatch_support
+def conv1d_v2(
+    input,  # pylint: disable=redefined-builtin
+    filters,
+    stride,
+    padding,
+    data_format="NWC",
+    dilations=None,
+    name=None):
+  r"""Computes a 1-D convolution given 3-D input and filter tensors.
+  Given an input tensor of shape
+    `batch_shape + [in_width, in_channels]`
+  if `data_format` is `"NWC"`, or
+    `batch_shape + [in_channels, in_width]`
+  if `data_format` is `"NCW"`,
+  and a filter / kernel tensor of shape
+  `[filter_width, in_channels, out_channels]`, this op reshapes
+  the arguments to pass them to `conv2d` to perform the equivalent
+  convolution operation.
+  Internally, this op reshapes the input tensors and invokes `tf.nn.conv2d`.
+  For example, if `data_format` does not start with `"NC"`, a tensor of shape
+    `batch_shape + [in_width, in_channels]`
+  is reshaped to
+    `batch_shape + [1, in_width, in_channels]`,
+  and the filter is reshaped to
+    `[1, filter_width, in_channels, out_channels]`.
+  The result is then reshaped back to
+    `batch_shape + [out_width, out_channels]`
+  \(where out_width is a function of the stride and padding as in conv2d\) and
+  returned to the caller.
+  Args:
+    input: A Tensor of rank at least 3. Must be of type `float16`, `float32`, or
+      `float64`.
+    filters: A Tensor of rank at least 3.  Must have the same type as `input`.
+    stride: An int or list of `ints` that has length `1` or `3`.  The number of
+      entries by which the filter is moved right at each step.
+    padding: 'SAME' or 'VALID'. See
+      [here](https://www.tensorflow.org/api_docs/python/tf/nn#notes_on_padding_2)
+      for more information.
+    data_format: An optional `string` from `"NWC", "NCW"`.  Defaults to `"NWC"`,
+      the data is stored in the order of
+      `batch_shape + [in_width, in_channels]`.  The `"NCW"` format stores data
+      as `batch_shape + [in_channels, in_width]`.
+    dilations: An int or list of `ints` that has length `1` or `3` which
+      defaults to 1. The dilation factor for each dimension of input. If set to
+      k > 1, there will be k-1 skipped cells between each filter element on that
+      dimension. Dilations in the batch and depth dimensions must be 1.
+    name: A name for the operation (optional).
+  Returns:
+    A `Tensor`.  Has the same type as input.
+  Raises:
+    ValueError: if `data_format` is invalid.
+  """
+  return conv1d(
+      input,  # pylint: disable=redefined-builtin
+      filters,
+      stride,
+      padding,
+      use_cudnn_on_gpu=True,
+      data_format=data_format,
+      name=name,
+      dilations=dilations)
