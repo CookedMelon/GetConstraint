@@ -1,0 +1,34 @@
+name: tf.nn.collapse_repeated
+dependency: 
+  - labels
+  - seq_length
+
+constraints:
+  labels:
+    descp: Tensor of shape [batch, max value in seq_length].
+    dtype:
+      - tf.tensor
+    structure:
+      - shape: [batch, max value in seq_length]
+
+  seq_length:
+    descp: Tensor of shape [batch], sequence length of each batch element.
+    dtype:
+      - tf.tensor
+    structure:
+      - shape: [batch]
+
+  name:
+    default: "collapse_repeated_labels"
+    descp: A name for this `Op`.
+    dtype:
+      - string
+
+returns:
+  descp: A tuple `(collapsed_labels, new_seq_length)` where collapsed_labels is a Tensor of shape [batch, max_seq_length] with repeated labels collapsed and padded to max_seq_length, and new_seq_length is an int tensor of shape [batch] with new sequence lengths.
+  dtype:
+    - tf.tensor
+    - int tensor
+  structure:
+    - shape: [batch, max_seq_length]
+    - shape: [batch]

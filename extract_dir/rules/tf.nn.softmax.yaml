@@ -1,0 +1,39 @@
+name: tf.nn.softmax_v2
+alias:
+  - tf.math.softmax
+dependency: 
+  - logits
+constraints:
+  logits:
+    descp: A non-empty `Tensor`. Must be one of the following types: `half`, `float32`, `float64`.
+    dtype:
+    - half
+    - float32
+    - float64
+    addition:
+    - non-empty
+    structure:
+    - tf.tensor
+
+  axis:
+    default: -1
+    descp: The dimension softmax would be performed on. The default is -1 which indicates the last dimension.
+    dtype:
+    - int
+    structure:
+    - int
+
+  name:
+    default: None
+    descp: A name for the operation (optional).
+    dtype:
+    - string
+
+returns:
+  descp: A `Tensor`. Has the same type and shape as `logits`.
+  dtype:
+  - half
+  - float32
+  - float64
+  structure:
+  - tf.tensor

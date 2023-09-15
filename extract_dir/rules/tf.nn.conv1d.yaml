@@ -1,0 +1,82 @@
+name: tf.nn.conv1d_v2
+dependency:
+  - batch_shape
+  - [in_width]
+  - in_channels
+  - out_channels
+  - filter_width
+constraints:
+  input:
+    descp: A Tensor of rank at least 3. Must be of type `float16`, `float32`, or `float64`.
+    ndim:
+    - >=3
+    dtype:
+    - float16
+    - float32
+    - float64
+    structure:
+    - tf.tensor
+
+  filters:
+    descp: A Tensor of rank at least 3. Must have the same type as `input`.
+    ndim:
+    - >=3
+    dtype:
+    - float16
+    - float32
+    - float64
+    structure:
+    - tf.tensor
+  
+  stride:
+    descp: An int or list of `ints` that has length `1` or `3`. The number of entries by which the filter is moved right at each step.
+    dtype:
+    - int
+    structure:
+    - int
+    - list
+    addition:
+    - `stride.length` == 1 or `stride.length` == 3
+  
+  padding:
+    descp: 'SAME' or 'VALID'. See [here](https://www.tensorflow.org/api_docs/python/tf/nn#notes_on_padding_2) for more information.
+    enum:
+    - SAME
+    - VALID
+    dtype:
+    - string
+
+  data_format:
+    default: NWC
+    descp: An optional `string` from `"NWC", "NCW"`. Defaults to `"NWC"`, the data is stored in the order of `batch_shape + [in_width, in_channels]`. The `"NCW"` format stores data as `batch_shape + [in_channels, in_width]`.
+    enum:
+    - NWC
+    - NCW
+    dtype:
+    - string
+
+  dilations:
+    default: 1
+    descp: An int or list of `ints` that has length `1` or `3` which defaults to 1. The dilation factor for each dimension of input.
+    dtype:
+    - int
+    structure:
+    - int
+    - list
+    addition:
+    - `dilations.length` == 1 or `dilations.length` == 3
+
+  name:
+    default: None
+    descp: A name for the operation (optional).
+    dtype:
+    - string
+
+returns:
+  descp: A `Tensor`. Has the same type as input.
+  dtype:
+  - float16
+  - float32
+  - float64
+  structure:
+  - tf.tensor

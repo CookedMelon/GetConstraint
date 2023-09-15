@@ -1,0 +1,45 @@
+name: tf.nn.embedding_lookup_v2
+dependency: 
+  - params
+  - ids
+constraints:
+  params:
+    descp: A single tensor representing the complete embedding tensor, or a list of tensors all of the same shape except for the first dimension, representing sharded embedding tensors following "div" partition strategy.
+    dtype:
+      - list
+      - tf.tensor
+    addition:
+      - Not empty
+    structure:
+      - list
+      - tf.tensor
+
+  ids:
+    descp: A `Tensor` with type `int32` or `int64` containing the ids to be looked up in `params`.
+    dtype:
+      - int32
+      - int64
+    structure:
+      - tf.tensor
+
+  max_norm:
+    default: None
+    descp: If not `None`, each embedding is clipped if its l2-norm is larger than this value.
+    dtype:
+      - float
+      - None
+    structure:
+      - float
+
+  name:
+    default: None
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+
+returns:
+  descp: A `Tensor` with the same type as the tensors in `params`.
+  dtype:
+    - `params.type`
+  structure:
+    - tf.tensor
