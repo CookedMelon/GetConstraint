@@ -1,0 +1,31 @@
+@tf_export("nn.erosion2d", v1=[])
+def erosion2d_v2(value,
+                 filters,
+                 strides,
+                 padding,
+                 data_format,
+                 dilations,
+                 name=None):
+  Args:
+    value: A `Tensor`. 4-D with shape `[batch, in_height, in_width, depth]`.
+    filters: A `Tensor`. Must have the same type as `value`.
+      3-D with shape `[filters_height, filters_width, depth]`.
+    strides: A list of `ints` that has length `>= 4`.
+      1-D of length 4. The stride of the sliding window for each dimension of
+      the input tensor. Must be: `[1, stride_height, stride_width, 1]`.
+    padding: A `string` from: `"SAME", "VALID"`.
+      The type of padding algorithm to use. See
+      [here](https://www.tensorflow.org/api_docs/python/tf/nn#notes_on_padding_2)
+      for more information.
+    data_format: A `string`, only `"NHWC"` is currently supported.
+    dilations: A list of `ints` that has length `>= 4`.
+      1-D of length 4. The input stride for atrous morphological dilation.
+      Must be: `[1, rate_height, rate_width, 1]`.
+    name: A name for the operation (optional). If not specified "erosion2d"
+      is used.
+  Returns:
+    A `Tensor`. Has the same type as `value`.
+    4-D with shape `[batch, out_height, out_width, depth]`.
+  Raises:
+    ValueError: If the `value` depth does not match `filters`' shape, or if
+      padding is other than `'VALID'` or `'SAME'`.

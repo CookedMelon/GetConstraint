@@ -1,0 +1,21 @@
+name: tf.nn.scale_regularization_loss
+needed:
+  - regularization_loss
+constraints:
+  regularization_loss:
+    descp: Regularization loss.
+    dtype:
+      - float16
+      - float32
+      - float64
+    structure:
+      - tf.tensor
+
+returns:
+  descp: Scalar loss value.
+  dtype:
+    - float16
+    - float32
+    - float64
+  structure:
+    - tf.tensor

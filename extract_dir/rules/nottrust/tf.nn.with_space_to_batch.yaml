@@ -1,0 +1,86 @@
+name: nn.with_space_to_batch
+needed:
+  - input
+  - dilation_rate
+  - padding
+  - op
+constraints:
+  input:
+    descp: Tensor of rank > max(spatial_dims).
+    dtype:
+      - tf.tensor
+    ndim:
+      - '> max(spatial_dims)'
+    structure:
+      - tf.tensor
+
+  dilation_rate:
+    descp: int32 Tensor of *known* shape [num_spatial_dims].
+    dtype:
+      - tf.int32
+    structure:
+      - tf.tensor
+    shape:
+      - [num_spatial_dims]
+
+  padding:
+    descp: str constant equal to "VALID" or "SAME"
+    dtype:
+      - string
+    enum:
+      - VALID
+      - SAME
+    structure:
+      - none
+
+  op:
+    descp: Function that maps (input, num_spatial_dims, padding) -> output
+    dtype:
+      - function
+    structure:
+      - none
+
+  filter_shape:
+    descp: If padding = "SAME", specifies the shape of the convolution kernel/pooling window as an integer Tensor of shape [>=num_spatial_dims]. If padding = "VALID", filter_shape is ignored and need not be specified.
+    dtype:
+      - tf.int32
+    structure:
+      - tf.tensor
+    addition:
+      - '(padding == "SAME") => filter_shape is required'
+      - '(padding == "VALID") => filter_shape is ignored'
+
+  spatial_dims:
+    descp: Monotonically increasing sequence of `num_spatial_dims` integers (which are >= 1) specifying the spatial dimensions of `input` and output. Defaults to: `range(1, num_spatial_dims+1)`.
+    dtype:
+      - tf.int32
+    structure:
+      - tf.tensor
+    addition:
+      - 'all values >= 1'
+
+  data_format:
+    default: None
+    descp: A string or None. Specifies whether the channel dimension of the `input` and output is the last dimension (default, or if `data_format` does not start with "NC"), or the second dimension (if `data_format` starts with "NC"). For N=1, the valid values are "NWC" (default) and "NCW". For N=2, the valid values are "NHWC" (default) and "NCHW". For N=3, the valid values are "NDHWC" (default) and "NCDHW".
+    dtype:
+      - string
+    enum:
+      - NWC
+      - NCW
+      - NHWC
+      - NCHW
+      - NDHWC
+      - NCDHW
+    structure:
+      - none
+
+returns:
+  descp: The output Tensor as described above, dimensions will vary based on the op provided.
+  dtype:
+    - tf.tensor
+  structure:
+    - tf.tensor
+
+raises:
+  - ValueError: if `padding` is invalid or the arguments are incompatible.
+  - ValueError: if `spatial_dims` are invalid.

@@ -1,0 +1,63 @@
+name: one_hot
+needed:
+  - indices
+  - depth
+constraints:
+  indices:
+    descp: A `Tensor` of indices.
+    structure:
+      - tf.tensor
+
+  depth:
+    descp: A scalar defining the depth of the one hot dimension.
+    dtype:
+      - int
+    structure:
+      - tf.scalar
+
+  on_value:
+    default: 1
+    descp: A scalar defining the value to fill in output when `indices[j] = i`.
+    dtype:
+      - int
+    structure:
+      - tf.scalar
+
+  off_value:
+    default: 0
+    descp: A scalar defining the value to fill in output when `indices[j] != i`.
+    dtype:
+      - int
+    structure:
+      - tf.tensor
+
+  axis:
+    default: -1
+    descp: The axis to fill (default: -1, a new inner-most axis).
+    dtype:
+      - int
+    structure:
+      - none
+
+  dtype:
+    descp: The data type of the output tensor.
+    dtype:
+      - string
+    structure:
+      - none
+
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+
+returns:
+  descp: The one-hot tensor.
+  structure:
+    - tf.tensor
+
+raises:
+  - TypeError: If dtype of either `on_value` or `off_value` don't match `dtype`
+  - TypeError: If dtype of `on_value` and `off_value` don't match one another

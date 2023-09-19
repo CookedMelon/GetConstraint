@@ -1,0 +1,39 @@
+name: tf.math.pow
+needed:
+  - x
+  - y
+constraints:
+  x:
+    descp: A Tensor of type float16, float32, float64, int32, int64, complex64, or complex128.
+    dtype:
+      - float16
+      - float32
+      - float64
+      - int32
+      - int64
+      - complex64
+      - complex128
+    structure:
+      - tf.tensor
+  y:
+    descp: A Tensor of type float16, float32, float64, int32, int64, complex64, or complex128.
+    dtype:
+      - float16
+      - float32
+      - float64
+      - int32
+      - int64
+      - complex64
+      - complex128
+    structure:
+      - tf.tensor
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+returns:
+  descp: A Tensor.
+  structure:
+    - tf.tensor

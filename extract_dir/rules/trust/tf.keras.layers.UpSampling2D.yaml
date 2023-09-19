@@ -1,0 +1,51 @@
+name: keras.layers.UpSampling2D
+needed:
+constraints:
+  size:
+    descp: Int, or tuple of 2 integers. The upsampling factors for rows and columns.
+    dtype:
+      - int
+    structure:
+      - int
+      - tuple
+    addition:
+      - (size.structure == tuple) => size.length == 2
+
+  data_format:
+    default: channels_last
+    descp: A string, one of `channels_last` (default) or `channels_first`. The ordering of the dimensions in the inputs.
+    enum:
+      - channels_last
+      - channels_first
+    dtype:
+      - string
+    structure:
+      - none
+
+  interpolation:
+    descp: A string, one of `"area"`, `"bicubic"`, `"bilinear"`, `"gaussian"`, `"lanczos3"`, `"lanczos5"`, `"mitchellcubic"`, `"nearest"`.
+    enum:
+      - area
+      - bicubic
+      - bilinear
+      - gaussian
+      - lanczos3
+      - lanczos5
+      - mitchellcubic
+      - nearest
+    dtype:
+      - string
+    structure:
+      - none
+
+returns:
+  descp: 4D tensor with shape: If `data_format` is `"channels_last"`: `(batch_size, upsampled_rows, upsampled_cols, channels)`; If `data_format` is `"channels_first"`: `(batch_size, channels, upsampled_rows, upsampled_cols)`.
+  dtype:
+    - tensor
+  structure:
+    - tensor
+  ndim:
+    - 4
+  shape:
+    - (`data_format` == 'channels_last') => ([batch_size, upsampled_rows, upsampled_cols, channels])
+    - (`data_format` == 'channels_first') => ([batch_size, channels, upsampled_rows, upsampled_cols])

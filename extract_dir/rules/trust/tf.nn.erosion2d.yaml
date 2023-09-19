@@ -1,0 +1,67 @@
+name: tf.nn.erosion2d_v2
+needed:
+  - value
+  - filters
+  - strides
+  - padding
+  - data_format
+  - dilations
+  - name
+constraints:
+  value:
+    descp: A 4-D Tensor with shape `[batch, in_height, in_width, depth]`.
+    ndim:
+      - 4
+    structure:
+      - tf.tensor
+  filters:
+    descp: A 3-D Tensor. Must have the same type as `value`.
+    ndim:
+      - 3
+    structure:
+      - tf.tensor
+  strides:
+    descp: A list of ints that has length >= 4. The stride of the sliding window.
+    dtype:
+      - int
+    constraints:
+      - `strides.length` >= 4
+    structure:
+      - list
+  padding:
+    descp: A string from: "SAME", "VALID". The type of padding algorithm to use.
+    dtype:
+      - string
+    enum:
+      - SAME
+      - VALID
+    structure:
+      - none
+  data_format:
+    descp: A string, only "NHWC" is currently supported.
+    dtype:
+      - string
+    enum:
+      - NHWC
+    structure:
+      - none
+  dilations:
+    descp: A list of ints that has length >= 4. The input stride for atrous morphological dilation.
+    dtype:
+      - int
+    constraints:
+      - `dilations.length` >= 4
+    structure:
+      - list
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+returns:
+  descp: A Tensor. Has the same type as `value`. 4-D with shape `[batch, out_height, out_width, depth]`.
+  structure:
+    - tf.tensor
+raises:
+  - ValueError: If the `value` depth does not match `filters`' shape, or if padding is other than 'VALID' or 'SAME'.

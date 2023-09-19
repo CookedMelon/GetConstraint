@@ -1,0 +1,34 @@
+Analyze the API and generate the yaml file like above yaml directly.
+tf.keras.layers.UpSampling2D(
+    size=(2, 2), data_format=None, interpolation='nearest', **kwargs
+)
+@keras_export("keras.layers.UpSampling2D")
+    Args:
+      size: Int, or tuple of 2 integers.
+        The upsampling factors for rows and columns.
+      data_format: A string,
+        one of `channels_last` (default) or `channels_first`.
+        The ordering of the dimensions in the inputs.
+        `channels_last` corresponds to inputs with shape
+        `(batch_size, height, width, channels)` while `channels_first`
+        corresponds to inputs with shape
+        `(batch_size, channels, height, width)`.
+        When unspecified, uses
+        `image_data_format` value found in your Keras config file at
+         `~/.keras/keras.json` (if exists) else 'channels_last'.
+        Defaults to 'channels_last'.
+      interpolation: A string, one of `"area"`, `"bicubic"`, `"bilinear"`,
+        `"gaussian"`, `"lanczos3"`, `"lanczos5"`, `"mitchellcubic"`,
+        `"nearest"`.
+    Input shape:
+      4D tensor with shape:
+      - If `data_format` is `"channels_last"`:
+          `(batch_size, rows, cols, channels)`
+      - If `data_format` is `"channels_first"`:
+          `(batch_size, channels, rows, cols)`
+    Output shape:
+      4D tensor with shape:
+      - If `data_format` is `"channels_last"`:
+          `(batch_size, upsampled_rows, upsampled_cols, channels)`
+      - If `data_format` is `"channels_first"`:
+          `(batch_size, channels, upsampled_rows, upsampled_cols)`

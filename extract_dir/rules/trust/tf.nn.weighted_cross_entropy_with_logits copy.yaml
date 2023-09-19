@@ -1,44 +1,46 @@
 name: tf.nn.weighted_cross_entropy_with_logits_v2
-dependency: 
+needed:
   - labels
   - logits
   - pos_weight
-
 constraints:
   labels:
     descp: A Tensor of the same type and shape as logits, with values between 0 and 1 inclusive.
     dtype:
-      - tf.tensor
+      - float32
+      - float64
+    shape: 
+      - `logits.shape`
     structure:
-      - shape: Same as logits
-
+      - tensor
   logits:
     descp: A Tensor of type float32 or float64, any real numbers.
     dtype:
-      - tf.float32
-      - tf.float64
+      - float32
+      - float64
     structure:
-      - shape: Same as labels
-
+      - tensor
   pos_weight:
     descp: A coefficient to use on the positive examples, typically a scalar but otherwise broadcastable to the shape of logits. Its value should be non-negative.
     dtype:
-      - tf.tensor
+      - float
     structure:
-      - shape: Broadcastable to shape of logits
-
+      - scalar
+      - tensor
   name:
     default: None
     descp: A name for the operation (optional).
     dtype:
       - string
-
+    structure:
+      - none
 returns:
   descp: A Tensor of the same shape as logits with the componentwise weighted logistic losses.
+  ndim:
+    - Varies, same as logits
   dtype:
-    - tf.tensor
+    - float
   structure:
-    - shape: Same as logits
-
-errors:
+    - tensor
+raises:
   - ValueError: If logits and labels do not have the same shape.

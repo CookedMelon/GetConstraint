@@ -1,0 +1,8 @@
+Analyze the API and generate the yaml file like above yaml directly.
+
+@tf_export("nn.scale_regularization_loss")
+@dispatch.add_dispatch_support
+  Args:
+    regularization_loss: Regularization loss.
+  Returns:
+    Scalar loss value.

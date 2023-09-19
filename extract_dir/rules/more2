@@ -1,0 +1,163 @@
+name: tf.nn.scale_regularization_loss
+needed:
+  - regularization_loss
+constraints:
+  regularization_loss:
+    descp: Regularization loss.
+    dtype:
+      - float16
+      - float32
+      - float64
+    structure:
+      - tf.tensor
+
+returns:
+  descp: Scalar loss value.
+  dtype:
+    - float16
+    - float32
+    - float64
+  structure:
+    - tf.tensor
+"""
+name: tf.nn.softmax
+aliases:
+  - tf.math.softmax
+needed:
+  - logits
+constraints:
+  logits:
+    descp: A non-empty `Tensor`. Must be one of the following types: `half`, `float32`, `float64`.
+    dtype:
+      - half
+      - float32
+      - float64
+    structure:
+      - tf.tensor
+    addition:
+      - `logits.not_empty` == true
+
+  axis:
+    default: -1
+    descp: The dimension softmax would be performed on. The default is -1 which indicates the last dimension.
+    dtype:
+      - int
+    structure:
+      - none
+
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+
+returns:
+  descp: A `Tensor`. Has the same type and shape as `logits`.
+  dtype:
+    - `logits.dtype`
+  shape:
+    - `logits.shape`
+  structure:
+    - tf.tensor
+
+raises:
+  - InvalidArgumentError: if `logits` is empty or `axis` is beyond the last dimension of `logits`.
+"""
+name: tf.nn.weighted_cross_entropy_with_logits_v2
+needed:
+  - labels
+  - logits
+  - pos_weight
+constraints:
+  labels:
+    descp: A Tensor of the same type and shape as logits, with values between 0 and 1 inclusive.
+    dtype:
+      - float32
+      - float64
+    shape: 
+      - `logits.shape`
+    structure:
+      - tensor
+  logits:
+    descp: A Tensor of type float32 or float64, any real numbers.
+    dtype:
+      - float32
+      - float64
+    structure:
+      - tensor
+  pos_weight:
+    descp: A coefficient to use on the positive examples, typically a scalar but otherwise broadcastable to the shape of logits. Its value should be non-negative.
+    dtype:
+      - float
+    structure:
+      - scalar
+      - tensor
+  name:
+    default: None
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+returns:
+  descp: A Tensor of the same shape as logits with the componentwise weighted logistic losses.
+  ndim:
+    - Varies, same as logits
+  dtype:
+    - float
+  structure:
+    - tensor
+raises:
+  - ValueError: If logits and labels do not have the same shape.
+"""
+name: tf.nn.weighted_cross_entropy_with_logits
+needed:
+  - labels
+  - logits
+  - pos_weight
+constraints:
+  labels:
+    descp: A `Tensor` of the same type and shape as `logits`, with values between 0 and 1 inclusive.
+    dtype:
+      - `logits.dtype`
+    structure:
+      - tf.tensor
+    addition:
+      - `labels.range` == [0, 1]
+
+  logits:
+    descp: A `Tensor` of type `float32` or `float64`, any real numbers.
+    dtype:
+      - float32
+      - float64
+    structure:
+      - tf.tensor
+
+  pos_weight:
+    descp: A coefficient to use on the positive examples, typically a scalar but otherwise broadcastable to the shape of `logits`. Its value should be non-negative.
+    dtype:
+      - float
+    structure:
+      - tf.scalar
+    addition:
+      - `pos_weight` >= 0
+
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+
+returns:
+  descp: A `Tensor` of the same shape as `logits` with the componentwise weighted logistic losses.
+  shape:
+    - `logits.shape`
+  structure:
+    - tf.tensor
+
+raises:
+  - ValueError: If `logits` and `labels` do not have the same shape.
+
+"""

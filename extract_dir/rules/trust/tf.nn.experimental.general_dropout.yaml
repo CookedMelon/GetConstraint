@@ -1,0 +1,53 @@
+name: tf.nn.experimental.general_dropout
+annotations:
+  - @tf_export("nn.experimental.general_dropout")
+  - @dispatch.add_dispatch_support
+needed:
+  - x
+  - rate
+  - uniform_sampler
+  - noise_shape
+  - name
+constraints:
+  x:
+    descp: A floating point tensor.
+    dtype:
+      - float
+    structure:
+      - tf.tensor
+  rate:
+    descp: A scalar `Tensor` with the same type as x. The probability that each element is dropped.
+    dtype:
+      - float
+    constraints:
+      - 0 <= rate < 1
+    structure:
+      - tf.tensor
+  uniform_sampler:
+    descp: A callable used to generate a tensor of uniformly-distributed random numbers.
+    structure:
+      - callable
+  noise_shape:
+    descp: A 1-D integer `Tensor`, representing the shape for randomly generated keep/drop flags.
+    dtype:
+      - int
+    ndim:
+      - 1
+    structure:
+      - tf.tensor
+    optional: true
+  name:
+    descp: A name for this operation.
+    dtype:
+      - string
+    optional: true
+    structure:
+      - none
+returns:
+  descp: A Tensor of the same shape and dtype of `x`.
+  dtype:
+    - float
+  structure:
+    - tf.tensor
+raises:
+  - ValueError: If `rate` is not in `[0, 1)` or if `x` is not a floating point tensor. `rate=1` is disallowed.

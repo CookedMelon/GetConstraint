@@ -1,39 +1,43 @@
-name: tf.nn.softmax_v2
-alias:
+name: tf.nn.softmax
+aliases:
   - tf.math.softmax
-dependency: 
+needed:
   - logits
 constraints:
   logits:
     descp: A non-empty `Tensor`. Must be one of the following types: `half`, `float32`, `float64`.
     dtype:
-    - half
-    - float32
-    - float64
-    addition:
-    - non-empty
+      - half
+      - float32
+      - float64
     structure:
-    - tf.tensor
+      - tf.tensor
+    addition:
+      - `logits.not_empty` == true
 
   axis:
     default: -1
     descp: The dimension softmax would be performed on. The default is -1 which indicates the last dimension.
     dtype:
-    - int
+      - int
     structure:
-    - int
+      - none
 
   name:
-    default: None
     descp: A name for the operation (optional).
     dtype:
-    - string
+      - string
+    structure:
+      - none
 
 returns:
   descp: A `Tensor`. Has the same type and shape as `logits`.
   dtype:
-  - half
-  - float32
-  - float64
+    - `logits.dtype`
+  shape:
+    - `logits.shape`
   structure:
-  - tf.tensor
+    - tf.tensor
+
+raises:
+  - InvalidArgumentError: if `logits` is empty or `axis` is beyond the last dimension of `logits`.

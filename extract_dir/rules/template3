@@ -1,0 +1,256 @@
+I will give you an api description copy. Generate type constraints for each parameter and return yaml for me. 
+You should absolutely obey my description!!!
+The constraint needs to describe the dtype, dim, shape, struct, default value of the parameter.
+Among them, the dtype needs to be selected from the following types, if there are restrictions on types, you must to list the supported types
+
+ - float64  - tf.qint8  - tf.int64  - tf.float  - qint8  - tf.float32  - tf.qint16  - tf.bfloat16  - tf.complex128  - bool  - ints  - complex128  - float32  - tf.dtypes  - floats  - uint  - tf.uint64  - half  - quint16  - float16  - tf.uint8  - uint32  - tf.quint16  - tf.uint  - qint16  - double  - tf.boolean  - tf.dtype  - tf.int  - numeric  - tf.bool  - str  - quint8  - tf.int32  - float  - strings  - tf.half  - uint64  - string  - tf.str  - tf.complex  - boolean  - int64  - complex  - uint8  - tf.string  - bfloat16  - int8  - tf.uint16  - integer  - tf.float16  - floating  - tf.quint8  - tf.uint32  - int  - tf.qint32  - tf.complex64  - qint32  - int16  - complex64  - uint16  - tf.int16  - int32  - integers  - tf.float64  - tf.int8
+
+the structure must be selected from the following types
+
+  - list  - lists  - array  - arrays  - tuple  - dict  - dictionary  - iterable  - sequence  - ndarray  - array_like  - vector  - vectors  - tf.sparsetensor  - tf.tensor tf.scalar - tf.indexedslices  - sparsetensor  - tensors  - none
+the structure should be none if it is a single_value
+You should also give each parameter's descp please notice that you only need to copy the description exactly as it is.
+You should analyse which parameters must have and add them in the needed.
+
+Use `` to indicate other input parameters of the api!!! and use [] to indicate an exact value, and use {} warp to indicate a range of values
+When parameter constraints occur, the conditional branch can be expressed by the conditional expression '(condition) => result'
+You should also explain which api parameters are required
+Finally give me an yaml in this format
+Add additional conditions under addition
+When parameter constraints occur, the conditional branch can be expressed by the conditional expression '=>'
+Keep in mind that the generated constraints are used for logical analysis, and you need to ensure this
+I will give you some examples in several turns. Each turn after you learn examples you only need to speak 'yes'. You should get the extracted text is like this
+
+"""
+name: tf.keras.layers.Conv3DTranspose
+needed:
+  - filters
+  - kernel_size
+constraints:
+  filters:
+    descp: Integer, the dimensionality of the output space.
+    dtype: 
+      - int
+    structure: 
+      - none
+  kernel_size:
+    descp: An integer or tuple/list of 3 integers, specifying the depth, height and width of the 3D convolution window.
+    dtype: 
+      - int
+    structure:
+      - none
+      - list
+    addition:
+      - (`kernel_size.structure` == list) => `kernel_size.length` == 3
+  strides:
+    default: [1, 1, 1]
+    descp: An integer or tuple/list of 3 integers, specifying the strides of the convolution along the depth, height, and width.
+    dtype: 
+      - int
+    structure:
+      - none
+      - list
+    addition:
+      - (`strides.structure` == list) => `strides.length` == 3
+  padding:
+    default: valid
+    descp: One of "valid" or "same".
+    dtype: 
+      - string
+    enum:
+      - valid
+      - same
+    structure: none
+  output_padding:
+    default: None
+    descp: An integer or tuple/list of 3 integers, specifying the amount of padding along the depth, height, and width.
+    dtype: int
+    structure:
+      - none
+      - list
+    addition:
+      - (`output_padding.structure` == list) => `output_padding.length` == 3
+  data_format:
+    default: channels_last
+    descp: A string, one of channels_last (default) or channels_first.
+    dtype: 
+      - string
+    structure: 
+      - none
+  dilation_rate:
+    default: [1, 1, 1]
+    descp: An integer or tuple/list of 3 integers, specifying the dilation rate to use for dilated convolution.
+    dtype: int
+    structure:
+      - none
+      - list
+    addition:
+      - (`dilation_rate.structure` == list) => `dilation_rate.length` == 3
+  activation:
+    default: None
+    descp: Activation function to use.
+    dtype: 
+      - string
+    structure: 
+      - none
+  use_bias:
+    default: True
+    descp: Boolean, whether the layer uses a bias vector.
+    dtype: 
+      - bool
+    structure: none
+  kernel_initializer:
+    default: glorot_uniform
+    descp: Initializer for the kernel weights matrix.
+    dtype: 
+      - string
+    structure: 
+      - none
+  bias_initializer:
+    default: zeros
+    descp: Initializer for the bias vector.
+    dtype: 
+      - string
+    structure: 
+      - none
+  kernel_regularizer:
+    default: None
+    descp: Regularizer function applied to the kernel weights matrix.
+    dtype: 
+      - string
+    structure: 
+      - none
+  bias_regularizer:
+    default: None
+    descp: Regularizer function applied to the bias vector.
+    dtype: 
+      - string
+    structure: 
+      - none
+  activity_regularizer:
+    default: None
+    descp: Regularizer function applied to the output of the layer.
+    dtype: 
+      - string
+    structure: 
+      - none
+  kernel_constraint:
+    default: None
+    descp: Constraint function applied to the kernel matrix.
+    dtype: 
+      - string
+    structure: 
+      - none
+  bias_constraint:
+    default: None
+    descp: Constraint function applied to the bias vector.
+    dtype: 
+      - string
+    structure: 
+      - none
+returns:
+  descp: A tensor of rank 5 representing activation(conv3dtranspose(inputs, kernel) + bias).
+  ndim: 
+    - 5
+  dtype: 
+    - float
+  structure: 
+    - tensor
+"""
+name: keras.layers.UpSampling2D
+needed:
+constraints:
+  size:
+    descp: Int, or tuple of 2 integers. The upsampling factors for rows and columns.
+    dtype:
+      - int
+    structure:
+      - int
+      - tuple
+    addition:
+      - (size.structure == tuple) => size.length == 2
+
+  data_format:
+    default: channels_last
+    descp: A string, one of `channels_last` (default) or `channels_first`. The ordering of the dimensions in the inputs.
+    enum:
+      - channels_last
+      - channels_first
+    dtype:
+      - string
+    structure:
+      - none
+
+  interpolation:
+    descp: A string, one of `"area"`, `"bicubic"`, `"bilinear"`, `"gaussian"`, `"lanczos3"`, `"lanczos5"`, `"mitchellcubic"`, `"nearest"`.
+    enum:
+      - area
+      - bicubic
+      - bilinear
+      - gaussian
+      - lanczos3
+      - lanczos5
+      - mitchellcubic
+      - nearest
+    dtype:
+      - string
+    structure:
+      - none
+
+returns:
+  descp: 4D tensor with shape: If `data_format` is `"channels_last"`: `(batch_size, upsampled_rows, upsampled_cols, channels)`; If `data_format` is `"channels_first"`: `(batch_size, channels, upsampled_rows, upsampled_cols)`.
+  dtype:
+    - tensor
+  structure:
+    - tensor
+  ndim:
+    - 4
+  shape:
+    - (`data_format` == 'channels_last') => ([batch_size, upsampled_rows, upsampled_cols, channels])
+    - (`data_format` == 'channels_first') => ([batch_size, channels, upsampled_rows, upsampled_cols])
+"""
+name: tf.nn.collapse_repeated
+needed:
+  - labels
+  - seq_length
+constraints:
+  labels:
+    descp: Tensor of shape [batch, max value in seq_length].
+    dtype:
+      - tf.tensor
+    shape: 
+      - [batch] , `max value in seq_length`
+    structure:
+      - tf.tensor
+  seq_length:
+    descp: Tensor of shape [batch], sequence length of each batch element.
+    shape: 
+      - [batch]
+    structure:
+      - tf.tensor
+  name:
+    default: "collapse_repeated_labels"
+    descp: A name for this `Op`.
+    dtype:
+      - string
+    structure:
+      - none
+returns:
+  descp: A tuple `(collapsed_labels, new_seq_length)` where collapsed_labels is a Tensor of shape [batch, max_seq_length] with repeated labels collapsed and padded to max_seq_length, and new_seq_length is an int tensor of shape [batch] with new sequence lengths.
+  dtype:
+    - (collapsed_labels, new_seq_length)
+  structure:
+    - tuple
+  collapsed_labels:
+    structure:
+      - tf.tensor
+    shape:
+      - [batch, max_seq_length]
+  new_seq_length:
+    structure:
+      - tf.tensor
+    dtype:
+      - int
+    shape:
+      - [batch]
+"""

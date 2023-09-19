@@ -1,0 +1,26 @@
+name: tf.math.floor
+needed:
+  - x
+constraints:
+  x:
+    descp: A Tensor. Must be one of the following types: bfloat16, half, float32, float64. Returns element-wise largest integer not greater than x.
+    dtype:
+      - bfloat16
+      - half
+      - float32
+      - float64
+    structure:
+      - tf.tensor
+optional:
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+returns:
+  descp: A Tensor. Has the same type as x.
+  dtype:
+    - `x.dtype`
+  structure:
+    - tf.tensor

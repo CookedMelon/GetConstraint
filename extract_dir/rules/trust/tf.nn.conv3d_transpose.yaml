@@ -1,0 +1,83 @@
+name: tf.nn.conv3d_transpose
+aliases:
+  - nn.conv3d_transpose_v2
+needed:
+  - input
+  - filters
+  - output_shape
+  - strides
+constraints:
+  input:
+    descp: A 5-D Tensor of type float and shape [batch, depth, height, width, in_channels] for NDHWC data format or [batch, in_channels, depth, height, width] for NCDHW data format.
+    dtype:
+      - float
+    ndim:
+      - 5
+    structure:
+      - tf.tensor
+  filters:
+    descp: A 5-D Tensor with the same type as input and shape [depth, height, width, output_channels, in_channels].
+    dtype:
+      - float
+    ndim:
+      - 5
+    structure:
+      - tf.tensor
+  output_shape:
+    descp: A 1-D Tensor representing the output shape of the deconvolution op.
+    ndim:
+      - 1
+    structure:
+      - tf.tensor
+  strides:
+    descp: An int or list of ints that has length 1, 3, or 5. The stride of the sliding window for each dimension of input.
+    dtype:
+      - int
+    structure:
+      - int
+      - list
+  padding:
+    default: SAME
+    descp: Either 'VALID' or 'SAME'. The padding algorithm.
+    dtype:
+      - string
+    enum:
+      - VALID
+      - SAME
+    structure:
+      - none
+  data_format:
+    default: NDHWC
+    descp: A string. 'NDHWC' and 'NCDHW' are supported.
+    dtype:
+      - string
+    enum:
+      - NDHWC
+      - NCDHW
+    structure:
+      - none
+  dilations:
+    default: None
+    descp: An int or list of ints that has length 1, 3, or 5. The dilation factor for each dimension of input.
+    dtype:
+      - int
+    addition:
+      - (`dilations.structure` == list) => `dilations.length` == 1 or `dilations.length` == 3 `dilations.length` == 5
+    structure:
+      - int
+      - list
+  name:
+    default: None
+    descp: Optional name for the returned tensor.
+    dtype:
+      - string
+    structure:
+      - none
+returns:
+  descp: A Tensor with the same type as input.
+  dtype:
+    - float
+  ndim:
+    - 5
+  structure:
+    - tf.tensor

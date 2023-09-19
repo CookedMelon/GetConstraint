@@ -1,0 +1,75 @@
+name: tf.nn.nce_loss_v2
+needed:
+  - weights
+  - biases
+  - labels
+  - inputs
+  - num_sampled
+  - num_classes
+constraints:
+  weights:
+    descp: A Tensor of shape [num_classes, dim], or a list of Tensor objects whose concatenation along dimension 0 has shape [num_classes, dim].
+    shape:
+      - [num_classes, dim]
+    structure:
+      - tf.tensor
+  biases:
+    descp: A Tensor of shape [num_classes]. The class biases.
+    shape:
+      - [num_classes]
+    structure:
+      - tf.tensor
+  labels:
+    descp: A Tensor of type int64 and shape [batch_size, num_true]. The target classes.
+    dtype:
+      - int64
+    shape:
+      - [batch_size, num_true]
+    structure:
+      - tf.tensor
+  inputs:
+    descp: A Tensor of shape [batch_size, dim]. The forward activations of the input network.
+    shape:
+      - [batch_size, dim]
+    structure:
+      - tf.tensor
+  num_sampled:
+    descp: An int. The number of negative classes to randomly sample per batch.
+    dtype:
+      - int
+    structure:
+      - none
+  num_classes:
+    descp: An int. The number of possible classes.
+    dtype:
+      - int
+    structure:
+      - none
+  num_true:
+    descp: An int. The number of target classes per training example.
+    dtype:
+      - int
+    structure:
+      - none
+  sampled_values:
+    descp: A tuple returned by a *_candidate_sampler function. (default to log_uniform_candidate_sampler if None)
+    structure:
+      - tuple
+  remove_accidental_hits:
+    descp: A bool. Whether to remove "accidental hits" where a sampled class equals one of the target classes.
+    dtype:
+      - bool
+    structure:
+      - none
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    structure:
+      - none
+returns:
+  descp: A batch_size 1-D tensor of per-example NCE losses.
+  shape:
+    - [batch_size]
+  structure:
+    - tf.tensor

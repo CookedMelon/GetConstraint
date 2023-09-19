@@ -1,0 +1,14 @@
+Analyze the API and generate the yaml file like above yaml directly.
+
+@tf_export("nn.softmax", "math.softmax", v1=[])
+  Args:
+    logits: A non-empty `Tensor`. Must be one of the following types: `half`,
+      `float32`, `float64`.
+    axis: The dimension softmax would be performed on. The default is -1 which
+      indicates the last dimension.
+    name: A name for the operation (optional).
+  Returns:
+    A `Tensor`. Has the same type and shape as `logits`.
+  Raises:
+    InvalidArgumentError: if `logits` is empty or `axis` is beyond the last
+      dimension of `logits`.

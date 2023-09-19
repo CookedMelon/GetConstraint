@@ -1,5 +1,7 @@
 Analyze the API and generate the yaml file like above yaml directly.
-
+tf.nn.collapse_repeated(
+    labels, seq_length, name=None
+)
 @tf_export("nn.collapse_repeated")
 @dispatch.add_dispatch_support
 def collapse_repeated(labels, seq_length, name=None):

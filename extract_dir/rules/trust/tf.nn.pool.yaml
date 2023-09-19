@@ -1,0 +1,100 @@
+name: tf.nn.pool
+needed:
+  - input
+  - window_shape
+  - pooling_type
+constraints:
+  data_format:
+    default: None
+    descp: A string or None. Specifies whether the channel dimension of the `input` and output is the last dimension (default, or if `data_format` does not start with "NC"), or the second dimension (if `data_format` starts with "NC"). For N=1, the valid values are "NWC" (default) and "NCW". For N=2, the valid values are "NHWC" (default) and "NCHW". For N=3, the valid values are "NDHWC" (default) and "NCDHW".
+    enum:
+      - NWC
+      - NCW
+      - NHWC
+      - NCHW
+      - NDHWC
+      - NCDHW
+    dtype:
+      - string
+    structure:
+      - none
+    addition:
+      - ({input_spatial_shape.length} ==1 ) => `data_format` == NWC or `data_format` == NCW
+      - ({input_spatial_shape.length} ==2 ) => `data_format` == NHWC or `data_format` == NCHW
+      - ({input_spatial_shape.length} ==3 ) => `data_format` == NDHWC or `data_format` == NCDHW
+  dilations:
+    default: None
+    descp: Optional.  Dilation rate.  List of N ints >= 1. Defaults to [1]*N.  If
+      any value of dilation_rate is > 1, then all values of strides must be 1.
+    dtype:
+      - int
+    structure:
+      - list
+    addition:
+      - `dilations.length` == {input_spatial_shape.length}
+  input:
+    descp: Tensor of rank N+2, of shape `[batch_size] + input_spatial_shape + [num_channels]`
+      if data_format does not start with "NC" (default), or`[batch_size, num_channels]
+      + input_spatial_shape` if data_format starts with "NC".  Pooling happens over
+      the spatial dimensions only.
+    ndim:
+      - {input_spatial_shape.length} + 2
+    shape:
+      - (`data_format` != 'NC*') => ([batch_size] , {input_spatial_shape} , [num_channels])
+      - (`data_format` == 'NC*') => ([batch_size , num_channels] , {input_spatial_shape})
+    structure:
+      - tf.tensor
+  name:
+    default: None
+    descp: Optional. Name of the op.
+    dtype:
+      - string
+  padding:
+    default: VALID
+    descp: The padding algorithm, must be "SAME" or "VALID". Defaults to "SAME". See
+      the "returns" section of `tf.nn.convolution` for details.
+    enum:
+      - SAME
+      - VALID
+    dtype:
+      - string
+    structure:
+      - none
+  pooling_type:
+    descp: Specifies pooling operation, must be "AVG" or "MAX".
+    enum:
+      - AVG
+      - MAX
+    dtype:
+      - string
+    structure:
+      - none
+  strides:
+    default: None
+    descp: Optional. Sequence of N ints >= 1.  Defaults to [1]*N. If any value of
+      strides is > 1, then all values of dilation_rate must be 1.
+    dtype:
+      - int
+    structure:
+      - list
+    addition:
+      - `strides.length` == {input_spatial_shape.length}
+      - all values >= 1
+  window_shape:
+    descp: Sequence of N ints >= 1.
+    dtype:
+      - int
+    structure:
+      - list
+    addition:
+      - `window_shape.length` == {input_spatial_shape.length}
+      - `window_shape[i]` >= 1
+returns:
+  descp: Tensor of rank N+2, of shape [batch_size] + output_spatial_shape + [num_channels] if data_format is None or does not start with "NC", or [batch_size, num_channels] + output_spatial_shape if data_format starts with "NC", where output_spatial_shape depends on the value of padding If padding = "SAME" output_spatial_shape[i] = ceil(input_spatial_shape[i] / strides[i])"
+  structure:
+    - tf.tensor
+  ndim:
+    - {input_spatial_shape.length} + 2
+  shape:
+    - (`data_format` != 'NC*') => ([batch_size] , {output_spatial_shape} , [num_channels])
+    - (`data_format` == 'NC*') => ([batch_size] , [num_channels] , {output_spatial_shape})

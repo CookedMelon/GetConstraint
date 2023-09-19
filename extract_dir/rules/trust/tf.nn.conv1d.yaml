@@ -1,0 +1,86 @@
+name: tf.nn.conv1d
+needed:
+  - input
+  - filters
+  - stride
+  - padding
+constraints:
+  input:
+    descp: A Tensor of rank at least 3. Must be of type `float16`, `float32`, or `float64`.
+    dtype:
+      - float16
+      - float32
+      - float64
+    structure:
+      - tf.tensor
+    ndim:
+      - >= 3
+
+  filters:
+    descp: A Tensor of rank at least 3. Must have the same type as `input`.
+    dtype:
+      - `input.dtype`
+    structure:
+      - tf.tensor
+    ndim:
+      - >= 3
+
+  stride:
+    descp: An int or list of `ints` that has length `1` or `3`. The number of entries by which the filter is moved right at each step.
+    dtype:
+      - int
+    structure:
+      - int
+      - list
+    addition:
+      - `stride.length` == 1 or `stride.length` == 3
+
+  padding:
+    descp: 'SAME' or 'VALID'.
+    dtype:
+      - string
+    enum:
+      - SAME
+      - VALID
+    structure:
+      - none
+
+  data_format:
+    default: NWC
+    descp: An optional `string` from "NWC", "NCW". Defaults to "NWC", the data is stored in the order of `batch_shape + [in_width, in_channels]`. The "NCW" format stores data as `batch_shape + [in_channels, in_width]`.
+    dtype:
+      - string
+    enum:
+      - NWC
+      - NCW
+    structure:
+      - none
+
+  dilations:
+    default: 1
+    descp: An int or list of `ints` that has length `1` or `3` which defaults to 1. The dilation factor for each dimension of input. If set to k > 1, there will be k-1 skipped cells between each filter element on that dimension. Dilations in the batch and depth dimensions must be 1.
+    dtype:
+      - int
+    structure:
+      - int
+      - list
+    addition:
+      - `dilations.length` == 1 or `dilations.length` == 3
+
+  name:
+    descp: A name for the operation (optional).
+    dtype:
+      - string
+    optional: true
+    structure:
+      - none
+
+returns:
+  descp: A `Tensor`. Has the same type as input.
+  dtype:
+    - `input.dtype`
+  structure:
+    - tf.tensor
+
+raises:
+  - ValueError: if `data_format` is invalid.
